@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UVT Computer Science Roadmap</title>
+<style>
+ body {
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(#e6f0ff,#ffffff);
+    overflow-x:hidden;
+ }
+ h1 {
+    text-align:center;
+    padding:20px;
+    margin:0;
+ }
+ #roadmap {
+    position:relative;
+    width:2800px;
+    height:600px;
+    margin:50px auto;
+ }
+ svg {
+    position:absolute;
+    top:0;
+    left:0;
+ }
+ .stop {
+    position:absolute;
+    width:180px;
+    background:white;
+    border-radius:8px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.2);
+    padding:10px;
+    transform:translate(-50%, -50%);
+ }
+ .stop h3 {
+    margin:0 0 5px 0;
+    font-size:16px;
+ }
+ .stop p {
+    margin:0;
+    font-size:14px;
+ }
+ #car {
+    position:absolute;
+    font-size:30px;
+    transition:transform 1s;
+ }
+ #controls {
+    text-align:center;
+    margin-bottom:20px;
+ }
+ button {
+    padding:10px 20px;
+    margin:0 10px;
+    font-size:16px;
+    border:none;
+    background:#007bff;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+ }
+ button:disabled {
+    background:#ccc;
+ }
+</style>
+</head>
+<body>
+<h1>Computer Science Roadmap - West University of Timișoara</h1>
+<div id="controls">
+ <button id="prev">Previous</button>
+ <button id="next">Next</button>
+</div>
+<div id="roadmap">
+ <svg width="2800" height="600">
+   <path id="roadpath" d="M100 300 Q300 100 500 300 T900 300 T1300 300 T1700 300" stroke="#555" stroke-width="40" fill="none" stroke-linecap="round"/>
+   <path d="M100 300 Q300 100 500 300 T900 300 T1300 300 T1700 300" stroke="#aaa" stroke-width="30" fill="none" stroke-linecap="round" stroke-dasharray="20"/>
+ </svg>
+ <div id="car">🚗</div>
+</div>
+<script>
+const stops = [
+  {x:100, y:300, title:'Programming 1', desc:'Introduction to C++ and algorithms', sem:'Year 1, Sem 1'},
+  {x:300, y:100, title:'Discrete Mathematics', desc:'Logic, sets, combinatorics', sem:'Year 1, Sem 1'},
+  {x:500, y:300, title:'Algebra', desc:'Linear algebra fundamentals', sem:'Year 1, Sem 2'},
+  {x:700, y:500, title:'Data Structures', desc:'Lists, trees, graphs', sem:'Year 1, Sem 2'},
+  {x:900, y:300, title:'Computer Systems', desc:'Architecture and assembly basics', sem:'Year 1, Sem 2'},
+  {x:1100, y:100, title:'OOP', desc:'Object-oriented programming', sem:'Year 2, Sem 1'},
+  {x:1300, y:300, title:'Operating Systems', desc:'Processes, threads, scheduling', sem:'Year 2, Sem 1'},
+  {x:1500, y:500, title:'Databases', desc:'SQL and data modeling', sem:'Year 2, Sem 2'},
+  {x:1700, y:300, title:'Web Development', desc:'HTML, CSS, JavaScript', sem:'Year 2, Sem 2'},
+  {x:1900, y:100, title:'Automata Theory', desc:'Finite automata and grammars', sem:'Year 2, Sem 2'},
+  {x:2100, y:300, title:'Artificial Intelligence', desc:'Search and reasoning', sem:'Year 3, Sem 1'},
+  {x:2300, y:500, title:'Machine Learning', desc:'Supervised and unsupervised learning', sem:'Year 3, Sem 1'},
+  {x:2500, y:300, title:'Software Engineering', desc:'Design patterns, testing', sem:'Year 3, Sem 2'},
+  {x:2700, y:100, title:'Bachelor Thesis', desc:'Research and project work', sem:'Year 3, Sem 2'}
+];
+const roadmap = document.getElementById('roadmap');
+const car = document.getElementById('car');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+let current = 0;
+function createStops(){
+  stops.forEach((s,i)=>{
+    const div = document.createElement('div');
+    div.className='stop';
+    div.style.left=s.x+'px';
+    div.style.top=s.y+'px';
+    div.innerHTML='<h3>'+s.title+'</h3><p>'+s.desc+'<br><strong>'+s.sem+'</strong></p>';
+    roadmap.appendChild(div);
+  });
+}
+function moveCar(){
+  const s=stops[current];
+  car.style.transform=`translate(${s.x}px,${s.y-30}px)`;
+  prev.disabled=current===0;
+  next.disabled=current===stops.length-1;
+}
+prev.onclick=()=>{if(current>0){current--;moveCar();}}
+next.onclick=()=>{if(current<stops.length-1){current++;moveCar();}}
+createStops();
+moveCar();
+</script>
+</body>
+</html>
